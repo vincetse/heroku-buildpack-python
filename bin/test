@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# bin/test <build-dir> <env-dir>
+set -euo pipefail
+
+# unlike a regular app.json "test" script, this one isn't run with the app dir as the CWD
+# we `cd` with a default value, so that the script can also be called from inside the app dir (`cd ""` does not change cwd)
+cd "${1-}"
+
+echo "Trying to auto-detect test framework; first match will be found."
+
+if grep --quiet -- "\s*pytest\b" requirements.txt; then
+  echo "pytest found..."
+  pytest
+elif [[ -f manage.py ]]; then
+  echo "Django framework found..."
+  ./manage.py test
+else
+  echo "No unit test module found, trying default unittest..."
+  python -m unittest discover
+fi

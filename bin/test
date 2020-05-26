@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # bin/test <build-dir> <env-dir>
+# Inspired by test script in heroku/heroku-buildpack-php
 set -eo pipefail
+
+function unit_test_framework_is()
+{
+  local framework="$1"
+  cat requirements.txt 2> /dev/null | grep --quiet -- "\s*${framework}\b" || \
+    cat Pipfile 2> /dev/null | grep --quiet -- "\s*${framework}\b"
+}
 
 # unlike a regular app.json "test" script, this one isn't run with the app dir as the CWD
 # we `cd` with a default value, so that the script can also be called from inside the app dir (`cd ""` does not change cwd)
@@ -11,10 +19,10 @@ echo "Trying to auto-detect test framework; first match will be found."
 if [[ -n "${UNIT_TEST_COMMAND}" ]]; then
   echo "Using custom unit test command..."
   ${UNIT_TEST_COMMAND}
-elif grep --quiet -- "\s*pytest\b" requirements.txt; then
+elif unit_test_framework_is "pytest"; then
   echo "pytest found..."
   pytest
-elif grep --quiet -- "\s*pytest\b" requirements.txt; then
+elif unit_test_framework_is "nose"; then
   echo "nose found..."
   nosetests
 elif [[ -f manage.py ]]; then

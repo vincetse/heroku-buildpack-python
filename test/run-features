@@ -88,27 +88,27 @@ testDontWarnOldDjango() {
 
 testRequirementsTestFramework() {
   test_ "requirements-nose"
-  assertCaptured "nose found"
+  assertCaptured "Running test: nosetests"
 }
 
 testRequirementsNoTestFramework() {
   test_ "requirements-standard"
-  assertCaptured "No unit test module found, trying default unittest"
+  assertCaptured "Running test: python -m unittest discover"
 }
 
 testPipenvTestFramework() {
-  test_ "pipenv-nose"
-  assertCaptured "nose found"
+  test_ "pipenv-pytest"
+  assertCaptured "Running test: pytest"
 }
 
 testPipenvNoTestFramework() {
   test_ "pipenv"
-  assertCaptured "No unit test module found, trying default unittest"
+  assertCaptured "Running test: python -m unittest discover"
 }
 
 testDjangoTest() {
   test_ "not-old-django"
-  assertCaptured "Django framework found"
+  assertCaptured "Running test: ./manage.py test"
 }
 
 

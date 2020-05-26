@@ -14,21 +14,25 @@ function unit_test_framework_is()
 # we `cd` with a default value, so that the script can also be called from inside the app dir (`cd ""` does not change cwd)
 cd "${1-}"
 
-echo "Trying to auto-detect test framework; first match will be found."
+# Import the utils script, which contains helper functions used throughout the buildpack.
+# shellcheck source=bin/utils
+source "$BIN_DIR/utils"
+
+puts-step "Detecting test framework; first match will be used."
 
 if [[ -n "${UNIT_TEST_COMMAND}" ]]; then
-  echo "Using custom unit test command..."
+  puts-step "Running test: ${UNIT_TEST_COMMAND}"
   ${UNIT_TEST_COMMAND}
 elif unit_test_framework_is "pytest"; then
-  echo "pytest found..."
+  puts-step "Running test: pytest"
   pytest
 elif unit_test_framework_is "nose"; then
-  echo "nose found..."
+  puts-step "Running test: nosetests"
   nosetests
 elif [[ -f manage.py ]]; then
-  echo "Django framework found..."
+  puts-step "Running test: ./manage.py test"
   ./manage.py test
 else
-  echo "No unit test module found, trying default unittest..."
+  puts-step "Running test: python -m unittest discover"
   python -m unittest discover
 fi

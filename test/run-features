@@ -107,7 +107,7 @@ testPipenvNoTestFramework() {
 }
 
 testDjangoTest() {
-  _test "not-old-django"
+  _test "collectstatic"
   assertCaptured "Running test: ./manage.py test"
 }
 

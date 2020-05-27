@@ -150,8 +150,6 @@ _assertContains()
   esac
 
   if [ "${expectation}" != "$?" ]; then
-    echo "haystack"
-    cat ${haystack}
     case "${expectation}" in
       0) default_msg="Expected <${haystack}> to contain <${needle}>" ;;
       1) default_msg="Did not expect <${haystack}> to contain <${needle}>" ;;

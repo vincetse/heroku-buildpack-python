@@ -71,11 +71,6 @@ release()
   capture ${BUILDPACK_HOME}/bin/release ${BUILD_DIR}
 }
 
-test_()
-{
-  capture ${BUILDPACK_HOME}/bin/test ${BUILD_DIR} ${CACHE_DIR}
-}
-
 updateVersion()
 {
   echo "$2" > "test/fixtures/${1}/runtime.txt"
@@ -264,6 +259,16 @@ release() {
   bp_dir=$(mktmpdir)
   cp -a $(pwd)/* ${bp_dir}
   capture ${bp_dir}/bin/release ${bp_dir}/test/fixtures/$1
+}
+
+test_compile_test() {
+  default_process_types_cleanup
+  bp_dir=$(mktmpdir)
+  compile_dir=$(mktmpdir)
+  cp -a $(pwd)/* ${bp_dir}
+  cp -a ${bp_dir}/test/fixtures/$1/. ${compile_dir}
+  capture ${bp_dir}/bin/test-compile ${compile_dir} ${2:-$(mktmpdir)} $3
+  capture ${bp_dir}/bin/test ${compile_dir} $3
 }
 
 assertFile() {

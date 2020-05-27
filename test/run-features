@@ -87,27 +87,27 @@ testDontWarnOldDjango() {
 }
 
 testRequirementsTestFramework() {
-  test_ "requirements-nose"
+  test_compile_test "requirements-nose"
   assertCaptured "Running test: nosetests"
 }
 
 testRequirementsNoTestFramework() {
-  test_ "requirements-standard"
+  test_compile_test "requirements-standard"
   assertCaptured "Running test: python -m unittest discover"
 }
 
 testPipenvTestFramework() {
-  test_ "pipenv-pytest"
+  test_compile_test "pipenv-pytest"
   assertCaptured "Running test: pytest"
 }
 
 testPipenvNoTestFramework() {
-  test_ "pipenv"
+  test_compile_test "pipenv"
   assertCaptured "Running test: python -m unittest discover"
 }
 
 testDjangoTest() {
-  test_ "not-old-django"
+  test_compile_test "not-old-django"
   assertCaptured "Running test: ./manage.py test"
 }
 

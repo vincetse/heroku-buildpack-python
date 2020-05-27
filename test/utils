@@ -150,6 +150,8 @@ _assertContains()
   esac
 
   if [ "${expectation}" != "$?" ]; then
+    echo "haystack"
+    cat ${haystack}
     case "${expectation}" in
       0) default_msg="Expected <${haystack}> to contain <${needle}>" ;;
       1) default_msg="Did not expect <${haystack}> to contain <${needle}>" ;;
@@ -261,13 +263,12 @@ release() {
   capture ${bp_dir}/bin/release ${bp_dir}/test/fixtures/$1
 }
 
-test_compile_test() {
+_test() {
   default_process_types_cleanup
   bp_dir=$(mktmpdir)
   compile_dir=$(mktmpdir)
   cp -a $(pwd)/* ${bp_dir}
   cp -a ${bp_dir}/test/fixtures/$1/. ${compile_dir}
-  capture ${bp_dir}/bin/test-compile ${compile_dir} ${2:-$(mktmpdir)} $3
   capture ${bp_dir}/bin/test ${compile_dir} $3
 }
 

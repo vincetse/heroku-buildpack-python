@@ -3,6 +3,9 @@
 # Inspired by test script in heroku/heroku-buildpack-php
 set -eo pipefail
 
+# Setup Path variables, for later use in the Buildpack.
+BIN_DIR=$(cd "$(dirname "$0")"; pwd)
+
 function unit_test_framework_is()
 {
   local framework="$1"

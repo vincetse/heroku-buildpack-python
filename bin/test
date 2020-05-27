@@ -22,17 +22,17 @@ puts-step "Detecting test framework; first match will be used."
 
 if [[ -n "${UNIT_TEST_COMMAND}" ]]; then
   puts-step "Running test: ${UNIT_TEST_COMMAND}"
-  ${UNIT_TEST_COMMAND}
+  ${UNIT_TEST_COMMAND} | indent
 elif unit_test_framework_is "pytest"; then
   puts-step "Running test: pytest"
-  pytest
+  pytest | indent
 elif unit_test_framework_is "nose"; then
   puts-step "Running test: nosetests"
-  nosetests
+  nosetests | indent
 elif [[ -f manage.py ]]; then
   puts-step "Running test: ./manage.py test"
-  ./manage.py test
+  ./manage.py test | indent
 else
   puts-step "Running test: python -m unittest discover"
-  python -m unittest discover
+  python -m unittest discover | indent
 fi

@@ -87,58 +87,51 @@ testDontWarnOldDjango() {
 }
 
 testRequirementsTestFramework() {
-  _test "requirements-nose"
+  detect_test "requirements-nose"
   assertCaptured "Running test: nosetests"
 }
 
 testRequirementsNoTestFramework() {
-  _test "requirements-standard"
+  detect_test "requirements-standard"
   assertCaptured "Running test: python -m unittest discover"
 }
 
 testPipenvTestFramework() {
-  _test "pipenv-pytest"
+  detect_test "pipenv-pytest"
   assertCaptured "Running test: pytest"
 }
 
 testPipenvNoTestFramework() {
-  _test "pipenv"
+  detect_test "pipenv"
   assertCaptured "Running test: python -m unittest discover"
 }
 
 testDjangoTest() {
-  _test "collectstatic"
+  compile_and_test "collectstatic"
   assertCaptured "Running test: ./manage.py test"
+  assertCapturedSuccess
 }
 
 testPytest() {
-  compile "pytest"
-  assertCapturedSuccess
-  _test "pytest"
+  compile_and_test "pytest"
   assertCaptured "Running test: pytest"
   assertCapturedSuccess
 }
 
 testUnittest() {
-  compile "unittest"
-  assertCapturedSuccess
-  _test "unittest"
+  compile_and_test "unittest"
   assertCaptured "Running test: python -m unittest discover"
   assertCapturedSuccess
 }
 
 testNose() {
-  compile "nose"
-  assertCapturedSuccess
-  _test "nose"
+  compile_and_test "nose"
   assertCaptured "Running test: nosetests"
   assertCapturedSuccess
 }
 
 testNose2() {
-  compile "nose2"
-  assertCapturedSuccess
-  _test "nose2"
+  compile_and_test "nose2"
   assertCaptured "Running test: nose2"
   assertCapturedSuccess
 }

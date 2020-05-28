@@ -5,6 +5,7 @@ set -eo pipefail
 
 # Setup Path variables, for later use in the Buildpack.
 BIN_DIR=$(cd "$(dirname "$0")"; pwd)
+export PATH=/app/.heroku/python/bin:/app/.heroku/vendor/bin:$PATH
 
 function unit_test_framework_is()
 {

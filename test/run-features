@@ -111,6 +111,37 @@ testDjangoTest() {
   assertCaptured "Running test: ./manage.py test"
 }
 
+testPytest() {
+  compile "pytest"
+  assertCapturedSuccess
+  _test "pytest"
+  assertCaptured "Running test: pytest"
+  assertCapturedSuccess
+}
+
+testUnittest() {
+  compile "unittest"
+  assertCapturedSuccess
+  _test "unittest"
+  assertCaptured "Running test: python -m unittest discover"
+  assertCapturedSuccess
+}
+
+testNose() {
+  compile "nose"
+  assertCapturedSuccess
+  _test "nose"
+  assertCaptured "Running test: nosetests"
+  assertCapturedSuccess
+}
+
+testNose2() {
+  compile "nose2"
+  assertCapturedSuccess
+  _test "nose2"
+  assertCaptured "Running test: nose2"
+  assertCapturedSuccess
+}
 
 pushd $(dirname 0) >/dev/null
 popd >/dev/null

@@ -29,6 +29,9 @@ if [[ -n "${UNIT_TEST_COMMAND}" ]]; then
 elif unit_test_framework_is "pytest"; then
   puts-step "Running test: pytest"
   pytest | indent
+elif unit_test_framework_is "nose2"; then
+  puts-step "Running test: nose2"
+  nose2 | indent
 elif unit_test_framework_is "nose"; then
   puts-step "Running test: nosetests"
   nosetests | indent

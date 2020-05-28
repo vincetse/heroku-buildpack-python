@@ -1,9 +1,9 @@
 language: ruby
 dist: bionic
 sudo: required
-branches:
-  only:
-  - master
+#branches:
+#  only:
+#  - master
 
 rvm:
 - 2.6.6
